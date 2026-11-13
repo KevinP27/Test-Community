@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_installation_sheet_document">
+        <t t-call="web.basic_layout">
+            <t t-set="meta" t-value="doc._get_installation_sheet_meta()"/>
+            <t t-set="products" t-value="doc._get_installation_sheet_products()"/>
+            <div class="page sg">
+                <style>
+                    .sg { font-size: 11px; color: #000; }
+                    .sg table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+                    .sg td { padding: 3px 6px; vertical-align: middle; border: 1px solid #555; }
+                    .sg .nb td { border: none; }
+                    .sg .hdr td { background-color: #1f3a5f; color: #fff; border: none; padding: 7px 10px; }
+                    .sg .brand { font-size: 18px; font-weight: bold; letter-spacing: 1px; }
+                    .sg .tag { font-size: 9px; }
+                    .sg .sub { font-size: 9px; color: #444; padding: 3px 0 6px 0; }
+                    .sg .title { font-size: 14px; font-weight: bold; text-align: center; padding: 6px 0 4px 0; }
+                    .sg .sec { background-color: #e4ebf3; font-weight: bold; letter-spacing: 1px; }
+                    .sg .lbl { font-weight: bold; background-color: #f4f6f9; }
+                    .sg .gap { height: 8px; }
+                    .sg .cb { display: inline-block; width: 12px; height: 12px; border: 1.5px solid #000;
+                              text-align: center; line-height: 11px; font-size: 10px; font-weight: bold;
+                              vertical-align: middle; margin-right: 5px; }
+                    .sg .blank { height: 20px; }
+                    .sg .tall { height: 55px; }
+                    .sg .sigline { height: 42px; }
+                    .sg .small { font-size: 9px; }
+                </style>
+
+                <!-- Header -->
+                <table class="hdr">
+                    <tr>
+                        <td style="width: 45%;">
+                            <div class="brand">SHEERGUARD</div>
+                            <div class="tag">your clear security solution</div>
+                        </td>
+                        <td style="width: 55%; text-align: right; font-weight: bold; font-size: 12px;">
+                            INSTALLATION COMPLETION &amp; SIGN-OFF
+                        </td>
+                    </tr>
+                </table>
+                <div class="sub">
+                    <t t-out="meta['sop_code']"/> | Version <t t-out="meta['sop_version']"/> | For internal use only | SheerGuard SA Franchise Operations
+                </div>
+                <div class="title">
+                    INSTALLATION COMPLETION &amp; SIGN-OFF SHEET <t t-out="meta['sop_code']"/>
+                </div>
+
+                <!-- 1. Job details -->
+                <table>
+                    <tr><td colspan="8" class="sec">JOB DETAILS</td></tr>
+                    <tr>
+                        <td colspan="2" class="lbl">Customer Name:</td>
+                        <td colspan="2"><span t-out="doc.partner_id.name"/></td>
+                        <td colspan="2" class="lbl">Job / Invoice No:</td>
+                        <td colspan="2"><span t-out="doc._get_installation_sheet_job_ref()"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="lbl">Address:</td>
+                        <td colspan="6">
+                            <div t-field="doc.partner_shipping_id"
+                                 t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lbl">Date:</td>
+                        <td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
+                        <td class="lbl">Arrived:</td>
+                        <td class="blank"></td>
+                        <td class="lbl">Completed:</td>
+                        <td class="blank"></td>
+                        <td class="lbl">Duration:</td>
+                        <td class="blank"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="lbl">Lead Installer:</td>
+                        <td colspan="2" class="blank"></td>
+                        <td colspan="2" class="lbl">Team Member:</td>
+                        <td colspan="2" class="blank"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="lbl">Sales Person / Franchisee:</td>
+                        <td colspan="6"><span t-out="doc._get_installation_sheet_salesperson()"/></td>
+                    </tr>
+                </table>
+                <div class="gap"></div>
+
+                <!-- 2. Products installed -->
+                <table>
+                    <tr><td colspan="3" class="sec">PRODUCT(S) INSTALLED — Tick all that apply</td></tr>
+                    <t t-foreach="products['rows']" t-as="row">
+                        <tr>
+                            <t t-foreach="row" t-as="cell">
+                                <td>
+                                    <t t-if="cell['label']">
+                                        <span class="cb"><t t-if="cell['ticked']">X</t></span><t t-out="cell['label']"/><t t-if="cell['text']">: <t t-out="cell['text']"/></t>
+                                    </t>
+                                </td>
+                            </t>
+                        </tr>
+                    </t>
+                </table>
+                <div class="gap"></div>
+
+                <!-- 3. Installation quality checklist -->
+                <table>
+                    <tr><td colspan="2" class="sec">INSTALLATION QUALITY CHECKLIST — Installer to verify and tick each item</td></tr>
+                    <tr>
+                        <td style="width: 50%;"><span class="cb">&#160;</span>Product and colour match what was ordered and quoted</td>
+                        <td style="width: 50%;"><span class="cb">&#160;</span>Client shown how to operate the product (locks, handles, gates)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="cb">&#160;</span>Product inspected — no visible damage, scratches or defects</td>
+                        <td><span class="cb">&#160;</span>Cleaning and maintenance instructions explained to client</td>
+                    </tr>
+                    <tr>
+                        <td><span class="cb">&#160;</span>Installation is structurally secure — all fixings checked</td>
+                        <td><span class="cb">&#160;</span>Warranty terms explained — client knows how to log a service call</td>
+                    </tr>
+                    <tr>
+                        <td><span class="cb">&#160;</span>All screws, seals and finishing are neat and correctly in place</td>
+                        <td><span class="cb">&#160;</span>Completion photos taken <b>★ UPLOAD TO ODOO BEFORE CLOSING JOB</b></td>
+                    </tr>
+                    <tr>
+                        <td><span class="cb">&#160;</span>Site is clean — all off-cuts, packaging and waste removed</td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div class="gap"></div>
+
+                <!-- 4. Customer declaration -->
+                <table>
+                    <tr><td colspan="4" class="sec">CUSTOMER DECLARATION</td></tr>
+                    <tr>
+                        <td colspan="4">
+                            I confirm that the SheerGuard installation described above has been completed to my satisfaction. I have inspected the product, confirmed the correct product and colour were installed, and received instructions on care and maintenance. I acknowledge that the job is now complete.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="cb">&#160;</span>★★★★★ Excellent</td>
+                        <td><span class="cb">&#160;</span>★★★★ Good</td>
+                        <td><span class="cb">&#160;</span>★★★ Satisfactory</td>
+                        <td><span class="cb">&#160;</span>Issues noted</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="tall" style="vertical-align: top;"><b>Comments:</b></td>
+                    </tr>
+                </table>
+                <div class="gap"></div>
+
+                <!-- 5. Notes -->
+                <table>
+                    <tr><td class="sec">NOTES</td></tr>
+                    <tr><td class="tall" style="height: 70px;"></td></tr>
+                </table>
+                <div class="gap"></div>
+
+                <!-- 6. Signatures -->
+                <table>
+                    <tr><td colspan="2" class="sec">SIGNATURES</td></tr>
+                    <tr>
+                        <td class="lbl" style="width: 50%;">Customer</td>
+                        <td class="lbl" style="width: 50%;">Lead Installer</td>
+                    </tr>
+                    <tr>
+                        <td class="sigline" style="vertical-align: top;">Signature:</td>
+                        <td class="sigline" style="vertical-align: top;">Signature:</td>
+                    </tr>
+                    <tr>
+                        <td class="blank">Print Name:</td>
+                        <td class="blank">Print Name:</td>
+                    </tr>
+                    <tr>
+                        <td class="blank">Date:</td>
+                        <td class="blank">Date:</td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_installation_sheet">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="sale_installation_sheet.report_installation_sheet_document"/>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_installation_sheet" model="ir.ui.view">
+        <field name="name">sale.order.form.installation.sheet</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/field[@name='state']" position="before">
+                <button string="Print Installation Sheet"
+                        name="%(sale_installation_sheet.action_report_installation_sheet)d"
+                        type="action"
+                        invisible="state == 'cancel'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

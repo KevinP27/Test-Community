@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="param_sop_code" model="ir.config_parameter">
+            <field name="key">sale_installation_sheet.sop_code</field>
+            <field name="value">SOP-OPS-001</field>
+        </record>
+        <record id="param_sop_version" model="ir.config_parameter">
+            <field name="key">sale_installation_sheet.sop_version</field>
+            <field name="value">1.0</field>
+        </record>
+    </data>
+</odoo>
